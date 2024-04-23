@@ -1,105 +1,45 @@
 import { useState } from "react";
-import CustomForm from "../CustomForm";
-import TaskList from "../TaskList";
+import AddForm from "../AddForm";
+import Todo from "../Todo";
 import "./styles.scss";
+
 const MainPage = () => {
-  const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState("");
-  const [isChecked, setIsChecked] = useState(task.checked);
+  const [toDo, setToDo] = useState([]);
+  const [newTask, setNewTask] = useState("");
+  const [updateTask, setUpdateTask] = useState("");
 
-  const addTask = (item) => {
-    setTasks((prevState) => [...prevState, item]);
-  };
-
-  const handleCheckboxChange = (e) => {
-    setIsChecked(!isChecked);
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    addTask({
-      name: task,
-      checked: false,
-      id: Date.now(),
+  const markDone = (id) => {
+    const newTask = toDo.map((task) => {
+      if (task.id === id) {
+        return { ...task, status: !task.status };
+      }
+      return task;
     });
-    setTask("");
+    setToDo(newTask);
   };
-  console.log(tasks);
+  const addTask = () => {
+    if (newTask) {
+      const num = toDo.length + 1;
+      const newEntry = { id: num, title: newTask, status: false };
+      setToDo([...toDo, newEntry]);
+      setNewTask("");
+    }
+  };
+
+  const deleteTask = (id) => {
+    setToDo(toDo.filter((item) => item.id !== id));
+  };
 
   return (
     <div className="container">
       <header>
         <h1>To-do-list</h1>
       </header>
-      <CustomForm
-        handleFormSubmit={handleFormSubmit}
-        task={task}
-        setTask={setTask}
-      />
-      {tasks && (
-        <TaskList
-          handleCheckboxChange={handleCheckboxChange}
-          tasks={tasks}
-          isChecked={isChecked}
-        />
-      )}
+      <AddForm newTask={newTask} addTask={addTask} setNewTask={setNewTask} />
+      {toDo && toDo.length ? "" : "No Tasks..."}
+      <Todo toDo={toDo} markDone={markDone} deleteTask={deleteTask} />
     </div>
   );
 };
 
 export default MainPage;
-
-// import { Component } from "react";
-// import CustomForm from "../CustomForm";
-// import TaskList from "../TaskList";
-
-// class MainPage extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       tasks: [],
-//       task: "",
-//     };
-
-//     this.addTask = this.addTask.bind(this);
-//     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-//   }
-
-//   addTask(item) {
-//     this.setState((prevState) => ({
-//       tasks: [...prevState.tasks, item],
-//     }));
-//   }
-
-//   handleFormSubmit(e) {
-//     // e.preventDefault();
-
-//     this.addTask({
-//       name: this.state.task,
-//       checked: false,
-//       id: Date.now(),
-//     });
-
-//     this.setState({
-//       task: "",
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <div className="container">
-//         <header>
-//           <h1>To-do-list</h1>
-//         </header>
-//         <CustomForm
-//           handleFormSubmit={this.handleFormSubmit}
-//           task={this.state.task}
-//           setTask={(task) => this.setState({ task })}
-//         />
-//         <TaskList tasks={this.state.tasks} />
-//       </div>
-//     );
-//   }
-// }
-
-// export default MainPage;
