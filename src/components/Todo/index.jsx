@@ -1,6 +1,11 @@
 import React from "react";
-import { CheckCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
-const Todo = ({ toDo, markDone, deleteTask }) => {
+import {
+  CheckCircleIcon,
+  TrashIcon,
+  PencilIcon,
+  CheckIcon,
+} from "@heroicons/react/24/solid";
+const Todo = ({ toDo, markDone, deleteTask, updateData }) => {
   return (
     <div>
       {toDo &&
@@ -19,14 +24,21 @@ const Todo = ({ toDo, markDone, deleteTask }) => {
                       title="Complited/ No complited"
                       onClick={() => markDone(task.id)}
                     >
-                      <CheckCircleIcon style={{ width: 20, height: 20 }} />
+                      {task.status ? (
+                        <CheckCircleIcon style={{ width: 20, height: 20 }} />
+                      ) : (
+                        <CheckIcon style={{ width: 20, height: 20 }} />
+                      )}
                     </span>
 
                     {task.status ? null : (
-                      <span title="Delete" onClick={() => deleteTask(task.id)}>
-                        <TrashIcon style={{ width: 20, height: 20 }} />
+                      <span title="Edit" onClick={() => updateData()}>
+                        <PencilIcon style={{ width: 20, height: 20 }} />
                       </span>
                     )}
+                    <span title="Delete" onClick={() => deleteTask(task.id)}>
+                      <TrashIcon style={{ width: 20, height: 20 }} />
+                    </span>
                   </div>
                 </div>
               </React.Fragment>
