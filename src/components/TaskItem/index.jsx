@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import pen from "../../image/pen.svg";
+import drawer from "../../image/drawer.svg";
+
 import "./styles.scss";
-const TaskItem = ({ task, handleCheckboxChange, isChecked }) => {
+const TaskItem = ({ task, handleCheckboxChange, isChecked, deleteTask }) => {
   return (
     <li className="todo-list">
       <div className="todo-list__group">
@@ -13,15 +14,17 @@ const TaskItem = ({ task, handleCheckboxChange, isChecked }) => {
           name={task.name}
           onChange={() => handleCheckboxChange()}
         />
-        <label htmlFor={task.id} className="label">
-          <p className="todo-list__checkmark">
-            <CheckIcon strokeWidth={2} width={18} height={18} />
-          </p>
+        <label htmlFor="" className="todo-list__label">
           {task.name}
         </label>
       </div>
-      <div className="todo-list__">
-        <button className="todo-list__delete"></button>
+      <div onClick={() => deleteTask(task.id)} className="todo-list__buttons">
+        <button className="todo-list__delete">
+          <img src={drawer} alt="" />
+        </button>
+        <button className="todo-list__edit">
+          <img src={pen} alt="" />
+        </button>
       </div>
     </li>
   );

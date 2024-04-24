@@ -1,19 +1,18 @@
-import TaskItem from "../TaskItem/TaskItem";
+import TaskItem from "../TaskItem";
 import "./styles.scss";
 
-const TaskList = ({ tasks, handleCheckboxChange, isChecked }) => {
+const TaskList = ({ tasks, handleCheckboxChange, isChecked, deleteTask }) => {
   return (
     <ul className="tasks">
-      {tasks
-        .sort((a, b) => b.id - a.id)
-        .map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            handleCheckboxChange={handleCheckboxChange}
-            isChecked={isChecked}
-          />
-        ))}
+      {tasks.map((task) => (
+        <TaskItem
+          key={task.id}
+          task={task}
+          handleCheckboxChange={handleCheckboxChange}
+          isChecked={isChecked}
+          deleteTask={deleteTask}
+        />
+      ))}
     </ul>
   );
 };

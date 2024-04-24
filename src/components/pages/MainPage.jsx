@@ -2,28 +2,42 @@ import { useState } from "react";
 import CustomForm from "../CustomForm";
 import TaskList from "../TaskList";
 import "./styles.scss";
+
 const MainPage = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [isChecked, setIsChecked] = useState(task.checked);
 
-  const addTask = (item) => {
-    setTasks((prevState) => [...prevState, item]);
-  };
+  const handleCheckboxChange = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, isChecked: !task.isChecked } : task
+    );
 
-  const handleCheckboxChange = (e) => {
-    setIsChecked(!isChecked);
+    setTasks(updatedTasks);
+    // setIsChecked(!isChecked)
+    console.log(tasks);
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addTask({
-      name: task,
-      checked: false,
-      id: Date.now(),
+    const num = tasks.length + 1;
+    setTasks((prevState) => {
+      return [
+        ...prevState,
+        {
+          name: task,
+          checked: false,
+          id: num,
+        },
+      ];
     });
+
     setTask("");
   };
-  console.log(tasks);
+
+  const deleteTask = (id) => {
+    const updateTask = tasks.filter((task) => task.id !== id);
+    setTasks(updateTask);
+  };
 
   return (
     <div className="container">
@@ -40,6 +54,7 @@ const MainPage = () => {
           handleCheckboxChange={handleCheckboxChange}
           tasks={tasks}
           isChecked={isChecked}
+          deleteTask={deleteTask}
         />
       )}
     </div>
