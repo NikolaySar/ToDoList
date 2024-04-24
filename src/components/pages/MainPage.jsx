@@ -6,6 +6,7 @@ import "./styles.scss";
 const MainPage = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
+  const [error, setError] = useState({ descriptionError: "" });
   const [isChecked, setIsChecked] = useState(task.checked);
 
   const handleCheckboxChange = (id) => {
@@ -17,21 +18,33 @@ const MainPage = () => {
     // setIsChecked(!isChecked)
     console.log(tasks);
   };
-  const handleFormSubmit = (e) => {
+  const handleChangeInput = (key, value) => {
+    setTask({ ...task, [key]: value });
+  };
+  const checkValidation = (e) => {
     e.preventDefault();
-    const num = tasks.length + 1;
+    if (!task.name.trim()) {
+      setError({ ...error, descriptionError: "Поле не может быть пустым!" });
+      return;
+    }
+    addTask();
+  };
+
+  const addTask = () => {
     setTasks((prevState) => {
+      const num = tasks.length + 1;
       return [
         ...prevState,
         {
-          name: task,
+          name: task.name,
           checked: false,
           id: num,
         },
       ];
     });
 
-    setTask("");
+    setTask({ name: "", checked: false });
+    setError({ descriptionError: "" });
   };
 
   const deleteTask = (id) => {
@@ -45,7 +58,9 @@ const MainPage = () => {
         <h1>To-do-list</h1>
       </header>
       <CustomForm
-        handleFormSubmit={handleFormSubmit}
+        error={error}
+        handleChangeInput={handleChangeInput}
+        checkValidation={checkValidation}
         task={task}
         setTask={setTask}
       />

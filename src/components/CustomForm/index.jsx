@@ -1,10 +1,18 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
 import "./styles.scss";
-const CustomForm = ({ handleFormSubmit, task, setTask }) => {
+const CustomForm = ({
+  handleFormSubmit,
+  task,
+  setTask,
+  checkValidation,
+  error,
+  handleChangeInput,
+}) => {
   return (
     <div>
-      <form className="todo" onSubmit={handleFormSubmit}>
+      <form className="todo" onSubmit={handleChangeInput}>
         <div className="todo__wrapper">
+          {error.descriptionError && <p>{error.descriptionError}</p>}
           <input
             id="task"
             type="text"
@@ -15,10 +23,11 @@ const CustomForm = ({ handleFormSubmit, task, setTask }) => {
             required
             autoFocus
             maxLength={60}
+            onChange={handleChangeInput}
           />
           <label htmlFor="task" className="todo__label"></label>
         </div>
-        <button aria-label="Add task" type="submit">
+        <button onClick={checkValidation} aria-label="Add task" type="submit">
           <PlusIcon className="todo__btn" />
         </button>
       </form>
