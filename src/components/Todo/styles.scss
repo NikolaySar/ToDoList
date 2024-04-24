@@ -1,9 +1,12 @@
-.tasks {
-  display: grid;
-  list-style-type: none;
-  gap: 1.5em;
-  padding: 0;
-  margin: 15px;
-  overflow: auto;
-  max-height: 500px;
+.todo {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 15px 20px;
+  align-items: center;
+  .todo__icons {
+    display: flex;
+    gap: 10px;
+  }
 }

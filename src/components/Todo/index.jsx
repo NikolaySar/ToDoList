@@ -14,12 +14,12 @@ const Todo = ({ toDo, markDone, deleteTask, updateData }) => {
           .map((task, index) => {
             return (
               <React.Fragment key={task.id}>
-                <div className="">
+                <div className="todo">
                   <div className={task.status ? "done" : ""}>
                     <span>{index + 1}.</span>
                     <span>{task.title}</span>
                   </div>
-                  <div className="iconsWrap">
+                  <div className="todo__icons">
                     <span
                       title="Complited/ No complited"
                       onClick={() => markDone(task.id)}

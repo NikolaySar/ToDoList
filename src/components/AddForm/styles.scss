@@ -1,24 +1,12 @@
-.todo {
+.add-form {
   display: flex;
   gap: 0.5em;
   font-size: var(--_size);
   justify-content: center;
-  .wrapper {
-    flex: 1 1 100%;
-    position: relative;
-    display: grid;
-    gap: 0.2em;
-    .todo__input {
-      border: none;
-    }
-    .todo__input :focus {
-      outline: none;
-      box-shadow: 0 0 0 0.2em hsl(var(--bg)),
-        0 0 0 0.4em hsl(var(--accent) / 0.8);
-    }
-  }
-  .todo__btn {
-    height: 20px;
-    width: 20px;
+  margin-bottom: 20px;
+  .add-form__input {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 10px;
   }
 }
