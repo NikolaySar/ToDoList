@@ -1,41 +1,47 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
+import plus from "../../image/plus.svg";
 import "./styles.scss";
-const CustomForm = ({
+const AddTask = ({
   handleFormSubmit,
   task,
-  setTask,
   checkValidation,
   error,
   handleChangeInput,
 }) => {
   return (
     <div>
-      <form className="todo" onSubmit={handleChangeInput}>
-        <div className="todo__wrapper">
-          {error.descriptionError && <p>{error.descriptionError}</p>}
-          <input
-            id="task"
-            type="text"
-            className="todo__input"
-            placeholder="Create a new todo..."
-            onInput={(e) => setTask(e.target.value)}
-            value={task}
-            required
-            autoFocus
-            maxLength={60}
-            onChange={handleChangeInput}
-          />
-          <label htmlFor="task" className="todo__label"></label>
+      <form className="add-task" onSubmit={handleChangeInput}>
+        <div className="add-task__wrapper">
+          {error.descriptionError && (
+            <span className="add-task__error">{error.descriptionError}</span>
+          )}
+          <div className="add-task__inner">
+            <input
+              id="task"
+              type="text"
+              className="add-task__input"
+              placeholder="Create a new todo..."
+              onChange={(e) => handleChangeInput("name", e.target.value)}
+              value={task.name}
+              required
+              autoFocus
+              maxLength={60}
+            />
+            <button
+              className="add-task__btn"
+              onClick={checkValidation}
+              aria-label="Add task"
+              type="submit"
+            >
+              <img className="add-task__img" src={plus} alt="" />
+            </button>
+          </div>
         </div>
-        <button onClick={checkValidation} aria-label="Add task" type="submit">
-          <PlusIcon className="todo__btn" />
-        </button>
       </form>
     </div>
   );
 };
 
-export default CustomForm;
+export default AddTask;
 
 // import { PlusIcon } from "@heroicons/react/24/solid";
 // import { Component } from "react";

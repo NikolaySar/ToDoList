@@ -1,26 +1,33 @@
 import { useState } from "react";
-import CustomForm from "../CustomForm";
+import AddTask from "../AddTask";
 import TaskList from "../TaskList";
 import "./styles.scss";
 
 const MainPage = () => {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState("");
+  const [task, setTask] = useState({ name: "", checked: false });
   const [error, setError] = useState({ descriptionError: "" });
   const [isChecked, setIsChecked] = useState(task.checked);
 
   const handleCheckboxChange = (id) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, isChecked: !task.isChecked } : task
+      task.id === id ? { ...task, checked: !task.checked } : task
     );
-
     setTasks(updatedTasks);
-    // setIsChecked(!isChecked)
-    console.log(tasks);
   };
+  // const handleCheckboxChange = (id) => {
+  //   const updatedTasks = tasks.map((task) =>
+  //     task.id === id ? { ...task, isChecked: !task.isChecked } : task
+  //   );
+  //   setTasks(updatedTasks);
+  //   // setIsChecked(!isChecked);
+  //   console.log(tasks);
+  // };
+
   const handleChangeInput = (key, value) => {
     setTask({ ...task, [key]: value });
   };
+
   const checkValidation = (e) => {
     e.preventDefault();
     if (!task.name.trim()) {
@@ -36,13 +43,12 @@ const MainPage = () => {
       return [
         ...prevState,
         {
-          name: task.name,
-          checked: false,
+          ...task,
           id: num,
         },
       ];
     });
-
+    console.log(tasks);
     setTask({ name: "", checked: false });
     setError({ descriptionError: "" });
   };
@@ -57,12 +63,11 @@ const MainPage = () => {
       <header>
         <h1>To-do-list</h1>
       </header>
-      <CustomForm
+      <AddTask
         error={error}
         handleChangeInput={handleChangeInput}
         checkValidation={checkValidation}
         task={task}
-        setTask={setTask}
       />
       {tasks && (
         <TaskList

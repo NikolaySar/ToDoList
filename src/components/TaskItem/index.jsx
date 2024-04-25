@@ -9,10 +9,10 @@ const TaskItem = ({ task, handleCheckboxChange, isChecked, deleteTask }) => {
         <input
           type="checkbox"
           className="todo-list__checkbox"
-          checked={isChecked}
-          id={task.id}
+          checked={task.checked}
+          // id={task.id}
           name={task.name}
-          onChange={() => handleCheckboxChange()}
+          onChange={() => handleCheckboxChange(task.id)}
         />
         <label htmlFor="" className="todo-list__label">
           {task.name}
