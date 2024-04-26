@@ -11,26 +11,21 @@ class MainPage extends Component {
       task: { name: "", checked: false },
       error: { descriptionError: "" },
     };
-
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.checkValidation = this.checkValidation.bind(this);
-    this.addTask = this.addTask.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
   }
 
-  handleCheckboxChange(id) {
-    const updatedTasks = this.state.tasks.map((task) =>
-      task.id === id ? { ...task, checked: !task.checked } : task
-    );
-    this.setState({ tasks: updatedTasks });
-  }
+  handleCheckboxChange = (id) => {
+    const task = this.state.tasks.find((task) => task.id === id);
+    if (task) {
+      task.checked = !task.checked;
+    }
+    this.setState({ tasks: [...this.state.tasks] });
+  };
 
-  handleChangeInput(key, value) {
+  handleChangeInput = (key, value) => {
     this.setState({ task: { ...this.state.task, [key]: value } });
-  }
+  };
 
-  checkValidation(e) {
+  checkValidation = (e) => {
     e.preventDefault();
     if (!this.state.task.name.trim()) {
       this.setState({
@@ -42,9 +37,9 @@ class MainPage extends Component {
       return;
     }
     this.addTask();
-  }
+  };
 
-  addTask() {
+  addTask = () => {
     this.setState((prevState) => {
       const num = prevState.tasks.length + 1;
       return {
@@ -59,29 +54,31 @@ class MainPage extends Component {
         error: { descriptionError: "" },
       };
     });
-  }
+  };
 
-  deleteTask(id) {
+  deleteTask = (id) => {
     const updateTask = this.state.tasks.filter((task) => task.id !== id);
     this.setState({ tasks: updateTask });
-  }
+  };
 
   render() {
+    const { tasks, task, error } = this.state;
+
     return (
       <div className="container">
         <header>
           <h1>To-do-list</h1>
         </header>
         <AddTask
-          error={this.state.error}
+          error={error}
           handleChangeInput={this.handleChangeInput}
           checkValidation={this.checkValidation}
-          task={this.state.task}
+          task={task}
         />
-        {this.state.tasks && (
+        {tasks && (
           <TaskList
             handleCheckboxChange={this.handleCheckboxChange}
-            tasks={this.state.tasks}
+            tasks={tasks}
             deleteTask={this.deleteTask}
           />
         )}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TaskItem from "../TaskItem";
+import Task from "../Task";
 import "./styles.scss";
 
 class TaskList extends Component {
@@ -9,7 +9,7 @@ class TaskList extends Component {
     return (
       <ul className="task-list">
         {tasks.map((task) => (
-          <TaskItem
+          <Task
             key={task.id}
             task={task}
             handleCheckboxChange={handleCheckboxChange}
