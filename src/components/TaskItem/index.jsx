@@ -2,7 +2,13 @@ import pen from "../../image/pen.svg";
 import drawer from "../../image/drawer.svg";
 
 import "./styles.scss";
-const TaskItem = ({ task, handleCheckboxChange, isChecked, deleteTask }) => {
+const TaskItem = ({
+  task,
+  handleCheckboxChange,
+  isChecked,
+  deleteTask,
+  handleEditTask,
+}) => {
   return (
     <li className="todo-list">
       <div className="todo-list__group">
@@ -11,18 +17,22 @@ const TaskItem = ({ task, handleCheckboxChange, isChecked, deleteTask }) => {
           className="todo-list__checkbox"
           checked={task.checked}
           // id={task.id}
-          name={task.name}
+          // name={task.name}
           onChange={() => handleCheckboxChange(task.id)}
         />
-        <label htmlFor="" className="todo-list__label">
-          {task.name}
-        </label>
+        <p className="todo-list__label">{task.name}</p>
       </div>
-      <div onClick={() => deleteTask(task.id)} className="todo-list__buttons">
-        <button className="todo-list__delete">
+      <div className="todo-list__buttons">
+        <button
+          onClick={() => deleteTask(task.id)}
+          className="todo-list__delete"
+        >
           <img src={drawer} alt="" />
         </button>
-        <button className="todo-list__edit">
+        <button
+          onClick={() => handleEditTask(task.id)}
+          className="todo-list__edit"
+        >
           <img src={pen} alt="" />
         </button>
       </div>

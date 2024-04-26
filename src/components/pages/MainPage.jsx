@@ -5,24 +5,147 @@ import "./styles.scss";
 
 const MainPage = () => {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState({ name: "", checked: false });
+  const [task, setTask] = useState({
+    name: "",
+    checked: false,
+    id: Date.now(),
+  });
   const [error, setError] = useState({ descriptionError: "" });
-  const [isChecked, setIsChecked] = useState(task.checked);
+  //////////////////////////////////////////////////////
+  const [errorEditing, setEditingError] = useState({ descriptionError: "" });
+  const [updatedTask, setUpdatedTask] = useState({
+    id: "",
+    name: "",
+    checked: task.checked,
+  });
+  const [idUpdatedTask, setIdUpdatedTask] = useState(null);
 
+  const handleEditTask = (id) => {
+    setIdUpdatedTask(id);
+    const taskToUpdate = tasks.find((task) => task.id === id);
+    if (!taskToUpdate) {
+      return;
+    }
+
+    setUpdatedTask({
+      ...taskToUpdate,
+    });
+    console.log(updatedTask);
+  };
+
+  const handleInputChange = (e) => {
+    setUpdatedTask({
+      ...updatedTask,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const cancelEditing = () => {
+    setUpdatedTask({
+      name: "",
+      checked: task.checked,
+    });
+    setIdUpdatedTask(null);
+    setEditingError({
+      descriptionError: "",
+    });
+  };
+
+  const checkEditingValidation = (e) => {
+    e.preventDefault();
+    if (!updatedTask.name.trim()) {
+      setEditingError({
+        ...errorEditing,
+        descriptionError: "Поле не может быть пустым!",
+      });
+      return;
+    }
+
+    editTask(updatedTask);
+  };
+
+  const editTask = (updatedTask) => {
+    const tasksCopy = [...tasks];
+    const oldTaskIndex = tasksCopy.findIndex(
+      (task) => task.id === updatedTask.id
+    );
+
+    if (oldTaskIndex !== -1) {
+      tasksCopy[oldTaskIndex] = { ...updatedTask };
+    }
+
+    setTasks(tasksCopy);
+    setIdUpdatedTask(null);
+    setEditingError({ descriptionError: "" });
+  };
+
+  // const editTask = (updatedTask) => {
+  //   const copyCurrentTask = [...tasks];
+
+  //   let oldTask = copyCurrentTask.find((task) => task.id === updatedTask.id);
+
+  //   if (!oldTask) {
+  //     return;
+  //   }
+
+  //   const oldTaskIndex = copyCurrentTask.findIndex(
+  //     (task) => task.id === updatedTask.id
+  //   );
+
+  //   const newTask = {
+  //     id: oldTask.id,
+  //     name: updatedTask.name,
+  //     checked: updatedTask.checked,
+  //   };
+  //   copyCurrentTask[oldTaskIndex] = newTask;
+
+  //   setTask(copyCurrentTask);
+  //   setIdUpdatedTask(null);
+  //   setEditingError({
+  //     ...errorEditing,
+  //     descriptionError: "",
+  //   });
+  // };
+
+  // const editTask = (updatedTask) => {
+  //   const copyCurrentTask = [...tasks];
+
+  //   let oldTask = copyCurrentTask.find((task) => task.id === updatedTask.id);
+
+  //   if (!oldTask) {
+  //     return;
+  //   }
+
+  //   const oldTaskIndex = copyCurrentTask.findIndex(
+  //     (task) => task.id === updatedTask.id
+  //   );
+
+  //   const newTask = {
+  //     id: oldTask.id,
+  //     name: updatedTask.name,
+  //     checked: updatedTask.checked,
+  //   };
+
+  //   copyCurrentTask[oldTaskIndex] = newTask;
+
+  //   const updatedTask = [...copyCurrentTask];
+  //   setTasks(updatedTask);
+  //   setIdUpdatedTask(null);
+  //   setEditingError({
+  //     descriptionError: "",
+  //   });
+  // };
+
+  const deleteAllTask = () => {
+    setTasks("");
+  };
+  // //////////////////////////////////////////////////////////////////////////////////////////
   const handleCheckboxChange = (id) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, checked: !task.checked } : task
     );
     setTasks(updatedTasks);
   };
-  // const handleCheckboxChange = (id) => {
-  //   const updatedTasks = tasks.map((task) =>
-  //     task.id === id ? { ...task, isChecked: !task.isChecked } : task
-  //   );
-  //   setTasks(updatedTasks);
-  //   // setIsChecked(!isChecked);
-  //   console.log(tasks);
-  // };
 
   const handleChangeInput = (key, value) => {
     setTask({ ...task, [key]: value });
@@ -44,7 +167,7 @@ const MainPage = () => {
         ...prevState,
         {
           ...task,
-          id: num,
+          id: Date.now(),
         },
       ];
     });
@@ -54,8 +177,8 @@ const MainPage = () => {
   };
 
   const deleteTask = (id) => {
-    const updateTask = tasks.filter((task) => task.id !== id);
-    setTasks(updateTask);
+    const updatedTask = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTask);
   };
 
   return (
@@ -73,8 +196,15 @@ const MainPage = () => {
         <TaskList
           handleCheckboxChange={handleCheckboxChange}
           tasks={tasks}
-          isChecked={isChecked}
           deleteTask={deleteTask}
+          //
+          updatedTask={updatedTask}
+          idUpdatedTask={idUpdatedTask}
+          errorEditing={errorEditing}
+          handleEditTask={handleEditTask}
+          handleInputChange={handleInputChange}
+          checkEditingValidation={checkEditingValidation}
+          cancelEditing={cancelEditing}
         />
       )}
     </div>
