@@ -91,7 +91,7 @@ class MainPage extends Component {
       editingError: { descriptionError: "" },
     });
   };
-  // ///////////
+
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
     if (!task) {
@@ -160,7 +160,6 @@ class MainPage extends Component {
             handleCheckboxChange={this.handleCheckboxChange}
             tasks={tasks}
             deleteTask={this.deleteTask}
-            //
             updatedTask={updatedTask}
             idUpdatedTask={idUpdatedTask}
             errorEditing={errorEditing}
