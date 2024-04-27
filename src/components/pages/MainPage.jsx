@@ -13,6 +13,7 @@ class MainPage extends Component {
     };
   }
 
+  // ///////////
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
     if (!task) {
