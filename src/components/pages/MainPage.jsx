@@ -14,27 +14,23 @@ class MainPage extends Component {
       updatedTask: {
         id: "",
         name: "",
-        checked: false,
       },
       idUpdatedTask: null,
     };
   }
 
   handleEditTask = (id) => {
-    this.setState({ idUpdatedTask: id }, () => {
-      const taskToUpdate = this.state.tasks.find((task) => task.id === id);
+    this.setState({ idUpdatedTask: id });
+    const taskToUpdate = this.state.tasks.find((task) => task.id === id);
 
-      if (!taskToUpdate) {
-        return;
-      }
+    if (!taskToUpdate) {
+      return;
+    }
 
-      this.setState({
-        updatedTask: {
-          ...taskToUpdate,
-        },
-      });
-
-      console.log(this.state.updatedTask);
+    this.setState({
+      updatedTask: {
+        ...taskToUpdate,
+      },
     });
   };
 
@@ -51,7 +47,6 @@ class MainPage extends Component {
     this.setState({
       updatedTask: {
         name: "",
-        checked: this.props.task.checked,
       },
       idUpdatedTask: null,
       errorEditing: {
@@ -81,9 +76,11 @@ class MainPage extends Component {
       (task) => task.id === updatedTask.id
     );
 
-    if (oldTaskIndex !== -1) {
-      tasksCopy[oldTaskIndex] = { ...updatedTask };
+    if (oldTaskIndex === -1) {
+      return;
     }
+
+    tasksCopy[oldTaskIndex] = { ...updatedTask };
 
     this.setState({
       tasks: tasksCopy,

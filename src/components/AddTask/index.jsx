@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import plus from "../../image/plus.svg";
 import "./styles.scss";
 
@@ -28,7 +28,7 @@ class AddTask extends Component {
                 aria-label="Add task"
                 type="submit"
               >
-                <img className="add-task__img" src={plus} alt="" />
+                <img className="add-task__img" src={plus} alt="Plus" />
               </button>
             </div>
             {error.descriptionError && (

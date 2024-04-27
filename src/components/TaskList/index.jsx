@@ -8,7 +8,6 @@ class TaskList extends Component {
     const {
       tasks,
       handleCheckboxChange,
-      isChecked,
       deleteTask,
       updatedTask,
       idUpdatedTask,
@@ -22,7 +21,7 @@ class TaskList extends Component {
     return (
       <ul className="task-list">
         {tasks.map((task) => (
-          <div key={task.id} className="">
+          <div key={task.id} className="task-list__inner">
             {task.id === idUpdatedTask ? (
               <EditingTaskForm
                 updatedTask={updatedTask}
@@ -35,7 +34,6 @@ class TaskList extends Component {
               <Task
                 task={task}
                 handleCheckboxChange={handleCheckboxChange}
-                isChecked={isChecked}
                 deleteTask={deleteTask}
                 handleEditTask={handleEditTask}
               />

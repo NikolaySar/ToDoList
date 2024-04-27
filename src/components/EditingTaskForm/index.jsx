@@ -1,4 +1,5 @@
 import { Component } from "react";
+import cancel from "../../image/cancel.svg";
 import plus from "../../image/plus.svg";
 import "./styles.scss";
 
@@ -28,16 +29,25 @@ class EditingTaskForm extends Component {
                 autoFocus
               />
               <button
-                className="add-task__btn"
+                className="editing-task__btn"
                 onClick={checkEditingValidation}
                 aria-label="Add task"
-                type="submit"
+                type="button"
               >
-                <img className="add-task__img" src={plus} alt="" />
+                <img className="editing-task__img" src={plus} alt="Plus" />
+              </button>
+              <button
+                className="editing-task__btn"
+                onClick={cancelEditing}
+                type="button"
+              >
+                <img className="editing-task__img" src={cancel} alt="Cancel" />
               </button>
             </div>
             {errorEditing.descriptionError && (
-              <span className="">{errorEditing.descriptionError}</span>
+              <span className="editing-task__error">
+                {errorEditing.descriptionError}
+              </span>
             )}
           </div>
         </form>
