@@ -22,12 +22,18 @@
     }
   }
 
+  &__buttons {
+    display: flex;
+    align-items: center;
+  }
+
   &__btn {
-    height: 20px;
+    height: 30px;
     width: 20px;
     padding: 0;
     border: none;
     background: none;
+    margin-right: 10px;
   }
 
   &__error {

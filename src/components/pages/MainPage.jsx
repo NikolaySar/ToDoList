@@ -138,6 +138,10 @@ class MainPage extends Component {
     this.setState({ tasks: updateTask });
   };
 
+  deleteAllTasks = () => {
+    this.setState({ tasks: [] });
+  };
+
   sortTasks = (tasks) => {
     return tasks.slice().sort((a, b) => (a.checked > b.checked ? 1 : -1));
   };
@@ -155,6 +159,7 @@ class MainPage extends Component {
           handleChangeInput={this.handleChangeInput}
           checkValidation={this.checkValidation}
           task={task}
+          deleteAllTasks={this.deleteAllTasks}
         />
         {tasks && (
           <TaskList
