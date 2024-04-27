@@ -8,16 +8,17 @@ class MainPage extends Component {
     super(props);
     this.state = {
       tasks: [],
-      task: { name: "", checked: false },
+      task: { name: "", checked: false, id: Date.now() },
       error: { descriptionError: "" },
     };
   }
 
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
-    if (task) {
-      task.checked = !task.checked;
+    if (!task) {
+      return;
     }
+    task.checked = !task.checked;
     this.setState({ tasks: [...this.state.tasks] });
   };
 
@@ -47,7 +48,7 @@ class MainPage extends Component {
           ...prevState.tasks,
           {
             ...prevState.task,
-            id: num,
+            id: Date.now(),
           },
         ],
         task: { name: "", checked: false },
@@ -65,7 +66,7 @@ class MainPage extends Component {
     const { tasks, task, error } = this.state;
 
     return (
-      <div className="container">
+      <div className="main-page">
         <header>
           <h1>To-do-list</h1>
         </header>

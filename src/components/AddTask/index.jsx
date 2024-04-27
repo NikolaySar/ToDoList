@@ -10,9 +10,6 @@ class AddTask extends Component {
       <div>
         <form className="add-task" onSubmit={handleChangeInput}>
           <div className="add-task__wrapper">
-            {error.descriptionError && (
-              <span className="add-task__error">{error.descriptionError}</span>
-            )}
             <div className="add-task__inner">
               <input
                 id="task"
@@ -34,6 +31,9 @@ class AddTask extends Component {
                 <img className="add-task__img" src={plus} alt="" />
               </button>
             </div>
+            {error.descriptionError && (
+              <span className="add-task__error">{error.descriptionError}</span>
+            )}
           </div>
         </form>
       </div>

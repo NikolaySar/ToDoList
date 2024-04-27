@@ -17,9 +17,7 @@ class Task extends Component {
             name={task.name}
             onChange={() => handleCheckboxChange(task.id)}
           />
-          <label htmlFor="" className="task__label">
-            {task.name}
-          </label>
+          <p className="task__name">{task.name}</p>
         </div>
         <div onClick={() => deleteTask(task.id)} className="task__buttons">
           <button className="task__delete">

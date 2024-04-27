@@ -1,7 +1,6 @@
 .task {
   display: flex;
   justify-content: space-between;
-
   border: 1px solid;
   border-radius: 20px;
   padding: 10px 10px;
@@ -23,7 +22,7 @@
     border-radius: 5px;
   }
 
-  &__label {
+  &__name {
     display: flex;
     align-items: center;
   }
