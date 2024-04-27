@@ -20,26 +20,29 @@ class TaskList extends Component {
 
     return (
       <ul className="task-list">
-        {tasks.map((task) => (
-          <div key={task.id} className="task-list__inner">
-            {task.id === idUpdatedTask ? (
-              <EditingTaskForm
-                updatedTask={updatedTask}
-                errorEditing={errorEditing}
-                handleInputChange={handleInputChange}
-                checkEditingValidation={checkEditingValidation}
-                cancelEditing={cancelEditing}
-              />
-            ) : (
-              <Task
-                task={task}
-                handleCheckboxChange={handleCheckboxChange}
-                deleteTask={deleteTask}
-                handleEditTask={handleEditTask}
-              />
-            )}
-          </div>
-        ))}
+        {tasks
+          .slice()
+          .sort((a, b) => (a.checked > b.checked ? 1 : -1))
+          .map((task) => (
+            <div key={task.id} className="task-list__inner">
+              {task.id === idUpdatedTask ? (
+                <EditingTaskForm
+                  updatedTask={updatedTask}
+                  errorEditing={errorEditing}
+                  handleInputChange={handleInputChange}
+                  checkEditingValidation={checkEditingValidation}
+                  cancelEditing={cancelEditing}
+                />
+              ) : (
+                <Task
+                  task={task}
+                  handleCheckboxChange={handleCheckboxChange}
+                  deleteTask={deleteTask}
+                  handleEditTask={handleEditTask}
+                />
+              )}
+            </div>
+          ))}
       </ul>
     );
   }
