@@ -1,0 +1,9 @@
+.task-list {
+  display: grid;
+  list-style-type: none;
+  gap: 1.5em;
+  padding: 0;
+  margin: 15px;
+  overflow: auto;
+  max-height: 500px;
+}
