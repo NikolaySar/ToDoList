@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import AddTask from "../AddTask";
 import TaskList from "../TaskList";
 import "./styles.scss";
@@ -10,8 +10,84 @@ class MainPage extends Component {
       tasks: [],
       task: { name: "", checked: false, id: Date.now() },
       error: { descriptionError: "" },
+      errorEditing: { descriptionError: "" },
+      updatedTask: {
+        id: "",
+        name: "",
+      },
+      idUpdatedTask: null,
     };
   }
+
+  handleEditTask = (id) => {
+    this.setState({ idUpdatedTask: id });
+    const taskToUpdate = this.state.tasks.find((task) => task.id === id);
+
+    if (!taskToUpdate) {
+      return;
+    }
+
+    this.setState({
+      updatedTask: {
+        ...taskToUpdate,
+      },
+    });
+  };
+
+  handleInputChange = (e) => {
+    this.setState({
+      updatedTask: {
+        ...this.state.updatedTask,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  cancelEditing = () => {
+    this.setState({
+      updatedTask: {
+        name: "",
+      },
+      idUpdatedTask: null,
+      errorEditing: {
+        descriptionError: "",
+      },
+    });
+  };
+
+  checkEditingValidation = (e) => {
+    e.preventDefault();
+    if (!this.state.updatedTask.name.trim()) {
+      this.setState({
+        errorEditing: {
+          ...this.state.errorEditing,
+          descriptionError: "Поле не может быть пустым!",
+        },
+      });
+      return;
+    }
+
+    this.editTask(this.state.updatedTask);
+  };
+
+  editTask = (updatedTask) => {
+    const tasksCopy = [...this.state.tasks];
+    const oldTaskIndex = tasksCopy.findIndex(
+      (task) => task.id === updatedTask.id
+    );
+
+    if (oldTaskIndex === -1) {
+      return;
+    }
+
+    tasksCopy[oldTaskIndex] = { ...updatedTask };
+
+    this.setState({
+      tasks: tasksCopy,
+      idUpdatedTask: null,
+      editingError: { descriptionError: "" },
+    });
+  };
 
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
@@ -63,8 +139,8 @@ class MainPage extends Component {
   };
 
   render() {
-    const { tasks, task, error } = this.state;
-
+    const { tasks, task, error, errorEditing, updatedTask, idUpdatedTask } =
+      this.state;
     return (
       <div className="main-page">
         <header>
@@ -81,6 +157,13 @@ class MainPage extends Component {
             handleCheckboxChange={this.handleCheckboxChange}
             tasks={tasks}
             deleteTask={this.deleteTask}
+            updatedTask={updatedTask}
+            idUpdatedTask={idUpdatedTask}
+            errorEditing={errorEditing}
+            handleEditTask={this.handleEditTask}
+            handleInputChange={this.handleInputChange}
+            checkEditingValidation={this.checkEditingValidation}
+            cancelEditing={this.cancelEditing}
           />
         )}
       </div>
