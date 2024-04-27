@@ -138,6 +138,10 @@ class MainPage extends Component {
     this.setState({ tasks: updateTask });
   };
 
+  sortTasks = (tasks) => {
+    return tasks.slice().sort((a, b) => (a.checked > b.checked ? 1 : -1));
+  };
+
   render() {
     const { tasks, task, error, errorEditing, updatedTask, idUpdatedTask } =
       this.state;
@@ -164,6 +168,7 @@ class MainPage extends Component {
             handleInputChange={this.handleInputChange}
             checkEditingValidation={this.checkEditingValidation}
             cancelEditing={this.cancelEditing}
+            sortTasks={this.sortTasks}
           />
         )}
       </div>
