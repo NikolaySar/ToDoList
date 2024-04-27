@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import EditingTaskForm from "../EditingTaskForm";
 import Task from "../Task";
 import "./styles.scss";
@@ -20,7 +20,7 @@ class TaskList extends Component {
     } = this.props;
 
     return (
-      <ul className="tasks">
+      <ul className="task-list">
         {tasks.map((task) => (
           <div key={task.id} className="">
             {task.id === idUpdatedTask ? (

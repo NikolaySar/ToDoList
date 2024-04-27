@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import plus from "../../image/plus.svg";
+import "./styles.scss";
 
 class EditingTaskForm extends Component {
   render() {
@@ -13,17 +14,14 @@ class EditingTaskForm extends Component {
 
     return (
       <div>
-        <form className="">
-          <div className="">
-            {errorEditing.descriptionError && (
-              <span className="">{errorEditing.descriptionError}</span>
-            )}
-            <div className="add-task__inner">
+        <form className="editing-task">
+          <div className="editing-task__wrapper">
+            <div className="editing-task__inner">
               <input
                 id="task"
                 type="text"
                 name="name"
-                className=""
+                className="editing-task__input"
                 onChange={handleInputChange}
                 value={updatedTask.name}
                 required
@@ -38,6 +36,9 @@ class EditingTaskForm extends Component {
                 <img className="add-task__img" src={plus} alt="" />
               </button>
             </div>
+            {errorEditing.descriptionError && (
+              <span className="">{errorEditing.descriptionError}</span>
+            )}
           </div>
         </form>
       </div>

@@ -1,0 +1,16 @@
+.editing-task {
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  &__input {
+    width: 360px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-bottom: 5px;
+  }
+}

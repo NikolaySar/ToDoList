@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import AddTask from "../AddTask";
 import TaskList from "../TaskList";
 import "./styles.scss";
@@ -19,11 +19,10 @@ class MainPage extends Component {
       idUpdatedTask: null,
     };
   }
-  handleEditTask = (id) => {
-    this.setState({ idUpdatedTask: id });
 
-    if (this.props.tasks) {
-      const taskToUpdate = this.props.tasks.find((task) => task.id === id);
+  handleEditTask = (id) => {
+    this.setState({ idUpdatedTask: id }, () => {
+      const taskToUpdate = this.state.tasks.find((task) => task.id === id);
 
       if (!taskToUpdate) {
         return;
@@ -34,8 +33,9 @@ class MainPage extends Component {
           ...taskToUpdate,
         },
       });
+
       console.log(this.state.updatedTask);
-    }
+    });
   };
 
   handleInputChange = (e) => {
@@ -76,7 +76,7 @@ class MainPage extends Component {
   };
 
   editTask = (updatedTask) => {
-    const tasksCopy = [...this.props.tasks];
+    const tasksCopy = [...this.state.tasks];
     const oldTaskIndex = tasksCopy.findIndex(
       (task) => task.id === updatedTask.id
     );
@@ -85,10 +85,10 @@ class MainPage extends Component {
       tasksCopy[oldTaskIndex] = { ...updatedTask };
     }
 
-    this.props.setTasks(tasksCopy);
     this.setState({
+      tasks: tasksCopy,
       idUpdatedTask: null,
-      errorEditing: { descriptionError: "" },
+      editingError: { descriptionError: "" },
     });
   };
   // ///////////
