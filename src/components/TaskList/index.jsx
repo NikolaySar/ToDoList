@@ -16,12 +16,11 @@ class TaskList extends Component {
       handleInputChange,
       checkEditingValidation,
       cancelEditing,
-      sortTasks,
     } = this.props;
 
     return (
       <ul className="task-list">
-        {sortTasks(tasks).map((task) => (
+        {tasks.map((task) => (
           <div key={task.id} className="task-list__inner">
             {task.id === idUpdatedTask ? (
               <EditingTaskForm

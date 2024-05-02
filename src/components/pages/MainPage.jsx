@@ -139,7 +139,7 @@ class MainPage extends Component {
   };
 
   sortTasks = (tasks) => {
-    return tasks.slice().sort((a, b) => (a.checked > b.checked ? 1 : -1));
+    return [...tasks].sort((a, b) => (a.checked > b.checked ? 1 : -1));
   };
 
   render() {
@@ -159,7 +159,7 @@ class MainPage extends Component {
         {tasks && (
           <TaskList
             handleCheckboxChange={this.handleCheckboxChange}
-            tasks={tasks}
+            tasks={this.sortTasks(tasks)}
             deleteTask={this.deleteTask}
             updatedTask={updatedTask}
             idUpdatedTask={idUpdatedTask}
@@ -168,7 +168,6 @@ class MainPage extends Component {
             handleInputChange={this.handleInputChange}
             checkEditingValidation={this.checkEditingValidation}
             cancelEditing={this.cancelEditing}
-            sortTasks={this.sortTasks}
           />
         )}
       </div>
