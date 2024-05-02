@@ -1,10 +1,12 @@
 import { Component } from "react";
+import drawer from "../../image/drawer.svg";
 import plus from "../../image/plus.svg";
 import "./styles.scss";
 
 class AddTask extends Component {
   render() {
-    const { task, checkValidation, error, handleChangeInput } = this.props;
+    const { task, checkValidation, error, handleChangeInput, deleteAllTasks } =
+      this.props;
 
     return (
       <div>
@@ -22,14 +24,23 @@ class AddTask extends Component {
                 autoFocus
                 maxLength={60}
               />
-              <button
-                className="add-task__btn"
-                onClick={checkValidation}
-                aria-label="Add task"
-                type="submit"
-              >
-                <img className="add-task__img" src={plus} alt="Plus" />
-              </button>
+              <div className="add-task__buttons">
+                <button
+                  className="add-task__btn"
+                  onClick={checkValidation}
+                  aria-label="Add task"
+                  type="submit"
+                >
+                  <img className="add-task__img" src={plus} alt="Plus" />
+                </button>
+                <button
+                  className="add-task__btn"
+                  onClick={deleteAllTasks}
+                  type="button"
+                >
+                  <img className="add-task__img" src={drawer} alt="" />
+                </button>
+              </div>
             </div>
             {error.descriptionError && (
               <span className="add-task__error">{error.descriptionError}</span>
