@@ -89,13 +89,18 @@ class MainPage extends Component {
     });
   };
 
+  sortTasks = (tasks) => {
+    return [...tasks].sort((a, b) => (a.checked > b.checked ? 1 : -1));
+  };
+
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
     if (!task) {
       return;
     }
     task.checked = !task.checked;
-    this.setState({ tasks: [...this.state.tasks] });
+    const sortedTasks = this.sortTasks([...this.state.tasks]);
+    this.setState({ tasks: sortedTasks });
   };
 
   handleChangeInput = (key, value) => {
