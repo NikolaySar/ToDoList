@@ -119,14 +119,11 @@ class MainPage extends Component {
   addTask = () => {
     this.setState((prevState) => {
       const num = prevState.tasks.length + 1;
+      const newTask = { ...prevState.task, id: Date.now() };
+      const newTasks = [...prevState.tasks, newTask];
+      const sortedTasks = this.sortTasks(newTasks);
       return {
-        tasks: [
-          ...prevState.tasks,
-          {
-            ...prevState.task,
-            id: Date.now(),
-          },
-        ],
+        tasks: sortedTasks,
         task: { name: "", checked: false },
         error: { descriptionError: "" },
       };
