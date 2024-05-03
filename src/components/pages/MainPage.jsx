@@ -89,13 +89,18 @@ class MainPage extends Component {
     });
   };
 
+  sortTasks = (tasks) => {
+    return [...tasks].sort((a, b) => (a.checked > b.checked ? 1 : -1));
+  };
+
   handleCheckboxChange = (id) => {
     const task = this.state.tasks.find((task) => task.id === id);
     if (!task) {
       return;
     }
     task.checked = !task.checked;
-    this.setState({ tasks: [...this.state.tasks] });
+    const sortedTasks = this.sortTasks([...this.state.tasks]);
+    this.setState({ tasks: sortedTasks });
   };
 
   handleChangeInput = (key, value) => {
@@ -119,11 +124,14 @@ class MainPage extends Component {
   addTask = () => {
     this.setState((prevState) => {
       const num = prevState.tasks.length + 1;
-      const newTask = { ...prevState.task, id: Date.now() };
-      const newTasks = [...prevState.tasks, newTask];
-      const sortedTasks = this.sortTasks(newTasks);
       return {
-        tasks: sortedTasks,
+        tasks: [
+          ...prevState.tasks,
+          {
+            ...prevState.task,
+            id: Date.now(),
+          },
+        ],
         task: { name: "", checked: false },
         error: { descriptionError: "" },
       };
@@ -133,10 +141,6 @@ class MainPage extends Component {
   deleteTask = (id) => {
     const updateTask = this.state.tasks.filter((task) => task.id !== id);
     this.setState({ tasks: updateTask });
-  };
-
-  sortTasks = (tasks) => {
-    return [...tasks].sort((a, b) => (a.checked > b.checked ? 1 : -1));
   };
 
   render() {
@@ -156,7 +160,7 @@ class MainPage extends Component {
         {tasks && (
           <TaskList
             handleCheckboxChange={this.handleCheckboxChange}
-            tasks={this.sortTasks(tasks)}
+            tasks={tasks}
             deleteTask={this.deleteTask}
             updatedTask={updatedTask}
             idUpdatedTask={idUpdatedTask}
